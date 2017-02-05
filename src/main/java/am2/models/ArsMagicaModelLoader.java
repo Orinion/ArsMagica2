@@ -137,12 +137,12 @@ public class ArsMagicaModelLoader implements ICustomModelLoader {
 			if (uri.getScheme().equals("jar")){
 				FileSystem fs = FileSystems.newFileSystem(uri, Collections.<String, Object>emptyMap());
 				myPath = fs.getPath(iconsPath);
-				toReturn = processDirectory(myPath);
+				toReturn = processDirectory(myPath, fs);
 				fs.close();
 				return toReturn;
 			}else{
 				myPath = Paths.get(uri);
-				toReturn = processDirectory(myPath);
+				toReturn = processDirectory(myPath, FileSystems.getDefault());
 				return toReturn;
 			}
 		} catch (URISyntaxException e){
@@ -153,14 +153,14 @@ public class ArsMagicaModelLoader implements ICustomModelLoader {
 		return Lists.newArrayList();
 	}
 
-	private static ArrayList<ResourceLocation> processDirectory(Path dir){
+	private static ArrayList<ResourceLocation> processDirectory(Path dir, FileSystem fs){
 		ArrayList<ResourceLocation> toReturn = new ArrayList<>();
 		try {
 			Stream<Path> walk = Files.walk(dir, 1);
 			for(Iterator<Path> file = walk.iterator(); file.hasNext();){
 				String name = file.next().toString();
-				if (name.lastIndexOf(File.separatorChar) + 1 > name.length()) continue;
-				name = name.substring(name.lastIndexOf(File.separatorChar) + 1);
+				if (name.lastIndexOf(fs.getSeparator()) + 1 > name.length()) continue;
+				name = name.substring(name.lastIndexOf(fs.getSeparator()) + 1);
 				if (name.equals("")) continue;
 				toReturn.add(new ResourceLocation("arsmagica2:" + iconsPrefix + name.replace(".png", "")));
 			}
