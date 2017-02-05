@@ -2,6 +2,7 @@ package am2.blocks.tileentity;
 
 import java.util.List;
 
+import am2.defs.BlockDefs;
 import com.google.common.collect.Lists;
 
 import am2.api.blocks.IKeystoneLockable;
@@ -192,6 +193,7 @@ public class TileEntityEssenceRefiner extends TileEntityAMPower implements IInve
 	}
 
 	private void setActiveTexture(){
+		if (this.getWorld().getBlockState(pos).getBlock() != BlockDefs.essenceRefiner){ this.invalidate(); return;}
 		if (worldObj.getBlockState(pos).getValue(BlockEssenceRefiner.ACTIVE) == isRefining() || worldObj.isRemote) return;
 		if (isRefining()){
 			if (!worldObj.isRemote){

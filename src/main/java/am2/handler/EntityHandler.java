@@ -377,7 +377,7 @@ public class EntityHandler {
 				if (EntityExtension.For(player).hasEnoughtMana(e.getAmount() * 10)) {
 					stack.getItem().onDroppedByPlayer(stack, player);
 					EntityExtension.For(player).deductMana(e.getAmount() * 10);
-				} else if (EntityExtension.For(player).hasEnoughtMana(SpellUtils.getManaCost(stack))) {
+				} else if (EntityExtension.For(player).hasEnoughtMana(SpellUtils.getManaCost(stack, e.getEntity()))) {
 					EntityLivingBase target = e.getSource().getEntity() instanceof EntityLivingBase ? (EntityLivingBase)e.getSource().getEntity() : null;
 					double posX = target != null ? target.posX : player.posX;
 					double posY = target != null ? target.posY : player.posY;

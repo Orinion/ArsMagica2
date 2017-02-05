@@ -123,7 +123,7 @@ public class ItemSpellStaff extends ItemArsMagica{
 		ItemStack spell = getSpellStack(stack);
 
 		if (spell != null){
-			chargeCost = SpellUtils.getManaCost(spell);
+			chargeCost = SpellUtils.getManaCost(spell, par2EntityPlayer);
 		}
 		if (chargeCost == 0)
 			chargeCost = 1;
@@ -272,7 +272,7 @@ public class ItemSpellStaff extends ItemArsMagica{
 		ItemStack spell = getSpellStack(staffStack);
 
 		if (spell != null){
-			chargeCost = SpellUtils.getManaCost(staffStack);
+			chargeCost = SpellUtils.getManaCost(staffStack, caster);
 		}
 		if (chargeCost == 0)
 			chargeCost = 1;

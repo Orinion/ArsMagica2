@@ -1,6 +1,7 @@
 **This is the current list of known bugs, if there are any that have NOT been added to this yet, make an issue post!**
 Crashes:
-	- Crash with starstrike hitting non-living entities*
+	- Crash with starstrike hitting non-living entities(i haven't been able to produce this but it has been reported)
+	- Client crash on spell cast(I have not been able to reproduce this but it has been reported)
 	
 Bugs:
 
@@ -11,13 +12,18 @@ Bugs:
 	- Crafting altar missing texture
 	- the /am2 command to set magic level doesn't sync correctly
 	- Bosses sometime don't drop anything(there's a check that checks to see if YOU did the last hit, sometimes this check is false when it gets killed)
-	- Disarm does not work on mobs
-	- Affinity has no effect on mana cost
-	- Spell book NEXT/PREV buttons do not work
 	- Air Guardian locking servers/clients up with spin attack(it locks the server side)
 	- Earth Armor breaks the hand positions
 	- Soulbound missing a texture in the Armor Imbuement Table
 	- Obelisk rendering is very derpy
+	- Summon spell not spawning correct mob
+	- Spells in the off-hand not being rendered in the correct position in first-person
+	- Spell radius isn't being used properly(if at all)
+	- Witchwood forest ignoring blacklist
+	- AM2 causing conflicts with Extra Utilities 2's jei implement(not sure how exactly but it has been reported)
+	- Tough As Nails not playing nicely, causing parts of its gui to go missing randomly
+	- Magician's Workbench not able to recall saved recipes
+	- Inscription table can create unusable spells(large amounts of modifiers/components)
 	
 Performance reports:
 

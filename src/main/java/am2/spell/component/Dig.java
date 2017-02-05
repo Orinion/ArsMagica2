@@ -29,6 +29,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.event.ForgeEventFactory;
 
 public class Dig extends SpellComponent {
@@ -47,15 +48,23 @@ public class Dig extends SpellComponent {
 		if (!(caster instanceof EntityPlayer))
 			return false;
 		if (world.isRemote) return true;
-		if (SpellUtils.modifierIsPresent(SpellModifiers.SILKTOUCH_LEVEL, stack)){
-			if (EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, stack) <= 0){
+		if (!ForgeHooks.canHarvestBlock(world.getBlockState(blockPos).getBlock(), (EntityPlayer)caster, world, blockPos)) {
+		    return false;
+		}
+        if (SpellUtils.modifierIsPresent(SpellModifiers.SILKTOUCH_LEVEL, stack)) {
+			if (EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, stack) <= 0) {
 				stack.addEnchantment(Enchantments.SILK_TOUCH, 1);
+			}
+		}else if (SpellUtils.modifierIsPresent(SpellModifiers.FORTUNE_LEVEL, stack)){
+
+			if (EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, stack) <= 0){
+				stack.addEnchantment(Enchantments.FORTUNE, SpellUtils.countModifiers(SpellModifiers.FORTUNE_LEVEL, stack));
 			}
 		}
 
 		IBlockState state = world.getBlockState(blockPos);
 		float hardness = state.getBlockHardness(world, blockPos);
-		if (ForgeEventFactory.doPlayerHarvestCheck((EntityPlayer)caster, state, true) && state.getBlockHardness(world, blockPos) != -1 && state.getBlock().getHarvestLevel(state) <= SpellUtils.getModifiedInt_Add(2, stack, caster, null, world, SpellModifiers.MINING_POWER)) {
+		if (state.getBlockHardness(world, blockPos) != -1 && state.getBlock().getHarvestLevel(state) <= SpellUtils.getModifiedInt_Add(2, stack, caster, null, world, SpellModifiers.MINING_POWER)) {
 			state.getBlock().harvestBlock(world, (EntityPlayer)caster, blockPos, state, null, stack);
 			world.destroyBlock(blockPos, false);
 			EntityExtension.For(caster).deductMana(hardness * 1.28f);

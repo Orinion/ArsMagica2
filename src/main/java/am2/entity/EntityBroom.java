@@ -37,6 +37,7 @@ public class EntityBroom extends EntityCreature{
 		initAI();
 		this.setSize(0.5f, 0.5f);
 		this.stepHeight = 1.05f;
+		this.enablePersistence();
 	}
 
 	@Override

@@ -45,9 +45,10 @@ public class EntityItemWatcher{
 		watchedItems.removeAll(toRemove);
 		toRemove.clear();
 
-		for (EntityItem item : watchedItems){
+		ArrayList<EntityItem> tempItemList = new ArrayList<EntityItem>(watchedItems);
+		for (EntityItem item : tempItemList){
 			if (item.isDead){
-				removeWatchedItem(item);
+				toRemove.add(item);
 				continue;
 			}
 			if (!item.isBurning() && (Math.abs(item.motionX) > 0.01 || Math.abs(item.motionY) > 0.01 || Math.abs(item.motionZ) > 0.01))
@@ -82,6 +83,7 @@ public class EntityItemWatcher{
 			}
 			removeWatchedItem(item);
 		}
+		tempItemList.clear();
 	}
 
 	public void addWatchedItem(EntityItem item){

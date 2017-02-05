@@ -1,5 +1,7 @@
 package am2.blocks.render;
 
+import am2.defs.BlockDefs;
+import net.minecraft.init.Blocks;
 import org.lwjgl.opengl.GL11;
 
 import am2.blocks.BlockEssenceConduit;
@@ -46,6 +48,8 @@ public class TileEssenceConduitRenderer extends TileEntitySpecialRenderer<TileEn
 	}
 	
 	public void renderTileEntityAt(TileEntityEssenceConduit tile, double d, double d1, double d2, float f, int destroyStage){
+		if (tile.getWorld() == null) return;
+		if (tile.getWorld().getBlockState(tile.getPos()).getBlock() != BlockDefs.essenceConduit) return;
 		createModel();
 		EnumFacing i = EnumFacing.DOWN;
 		if (destroyStage == -10) {

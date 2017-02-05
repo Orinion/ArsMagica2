@@ -277,7 +277,7 @@ public class AMIngameGUI extends Gui {
 					|| curItem.getItem() == ItemDefs.spellBook || curItem.getItem() == ItemDefs.arcaneSpellbook)){
 				ItemStack spellStack = curItem.getItem() == ItemDefs.spell ? curItem : ((ItemSpellBook)curItem.getItem()).GetActiveItemStack(curItem);
 				if (spellStack != null) {
-					float manaCost = SpellUtils.getManaCost(spellStack) * (1F + (float)((float)EntityExtension.For(Minecraft.getMinecraft().thePlayer).getCurrentBurnout() / (float)EntityExtension.For(Minecraft.getMinecraft().thePlayer).getMaxBurnout()));
+					float manaCost = SpellUtils.getManaCost(spellStack, Minecraft.getMinecraft().thePlayer) * (1F + (float)((float)EntityExtension.For(Minecraft.getMinecraft().thePlayer).getCurrentBurnout() / (float)EntityExtension.For(Minecraft.getMinecraft().thePlayer).getMaxBurnout()));
 					spellcost = (EntityExtension.For(Minecraft.getMinecraft().thePlayer).hasEnoughtMana(manaCost) ? ChatFormatting.AQUA.toString() : ChatFormatting.DARK_RED.toString()) + " (" + (int)(manaCost) + ")";
 					spellcost += ChatFormatting.RESET.toString();
 				}

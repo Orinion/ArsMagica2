@@ -62,8 +62,9 @@ public class SpellBase extends ItemSpellBase{
 	public void addInformation(ItemStack stack, EntityPlayer player, List<String> list, boolean par4){
 		if (!stack.hasTagCompound()) return;
 		
-		float manaCost = SpellUtils.getManaCost(stack);
+		float manaCost = SpellUtils.getManaCost(stack, player);
 		manaCost *= 1F + (float)((float)EntityExtension.For(player).getCurrentBurnout() / (float)EntityExtension.For(player).getMaxBurnout());
+
 		list.add("Mana Cost : " + manaCost);
 	}
 

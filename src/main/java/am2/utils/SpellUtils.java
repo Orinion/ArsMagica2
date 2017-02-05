@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import javax.annotation.Nullable;
 
+import am2.extensions.AffinityData;
 import com.google.common.collect.Lists;
 
 import am2.ArsMagica2;
@@ -380,7 +381,7 @@ public class SpellUtils {
 		return NBTUtils.getAM2Tag(stack.getTagCompound()).getInteger("StageNum");
 	}
 	
-	public static float getManaCost(ItemStack stack) {
+	public static float getManaCost(ItemStack stack, Entity caster) {
 		if (stack.getTagCompound() == null)
 			return 0;
 		ItemStack mergedStack = merge(stack);
@@ -407,6 +408,9 @@ public class SpellUtils {
 				}
 			}
 			cost *= modMultiplier;
+			float enderDepth = (float)AffinityData.For((EntityLivingBase)caster).getAffinityDepth(Affinity.ENDER);
+			float reduction = 1 - (0.75f * enderDepth);
+			cost = cost * reduction;
 			return cost;
 		} catch (Exception e) {
 			return 0;
@@ -451,7 +455,7 @@ public class SpellUtils {
 		if (shape instanceof MissingShape) {
 			return SpellCastResult.MALFORMED_SPELL_STACK;
 		}
-		float manaCost = getManaCost(stack);
+		float manaCost = getManaCost(stack, caster);
 		manaCost *= 1F + (float)((float)EntityExtension.For(caster).getCurrentBurnout() / (float)EntityExtension.For(caster).getMaxBurnout());
 		SpellCastEvent.Pre pre = new SpellCastEvent.Pre(caster, stack, manaCost);
 		MinecraftForge.EVENT_BUS.post(pre);
